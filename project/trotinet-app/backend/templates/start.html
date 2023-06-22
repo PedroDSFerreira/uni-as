@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename = '/img/favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
+    <title>TrotiNet</title>
+</head>
+<body id="start_page">
+    <div>
+        <h1 id="title">TrotiNet</h1>
+    </div>
+    <div>
+        <button id="login_button" class="btn btn-light button_purple" onclick="window.location.href='login'">Login</button>
+        <button id="register_button" class="btn btn-light button_purple" onclick="window.location.href='register'">Register</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,184 @@
+{% extends "layout.html" %}
+{% block content%}
+<div class="container mb-4" id="v-pills-tabContent ">
+    <div class="tab-pane fade show active " id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab"
+        tabindex="0">
+        <div class="container-lg p-4 ">
+            <div class="">
+                <h2 class="mt-2 mb-4 ">My account</h2>
+                <h5 class="mt-2 mb-3">Personal Information</h5>
+                <hr class="border-2">
+            </div>
+
+            <div class="">
+                <div class="mx-auto text-center" >
+                    <button type="button" data-bs-toggle="modal" class="btn btn-primary-light "
+                        data-bs-target="#exampleModal">
+                        <img src="{{ imgPath }}"
+                            class="overflow-hidden rounded-circle img-fluid img-thumbnail min-vh-75"
+                            alt="Something went wrong!" style="height: 40%; width: 40%;">
+                    </button>
+
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true" style="width: 100%;">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        {{ picform.hidden_tag() }}
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Change Profile
+                                        Picture
+                                    </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        {{ picform.picture.label(class="form-label")}}
+                                        {{ picform.picture(class="form-control", type="file") }}
+                                        {% if picform.picture.errors %}
+                                        {% for error in picform.picture.errors %}
+                                        <span class="text-danger"> {{ error }}</span>
+                                        {% endfor %}
+                                        {% endif%}
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    {{ picform.submit_profilePic(class="btn btn-primary") }}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="ms-2">
+                    <form class="row g-3" method="POST" action="">
+                        {{ personalform.hidden_tag() }}
+                        <div class="col-md-5">
+                            {{ personalform.firstname.label(class="form-label") }}
+                            {{ personalform.firstname(class="form-control ", value = current_user.firstname) }}
+                        </div>
+                        <div class="col-md-5">
+                            {{ personalform.lastname.label(class="form-label") }}
+                            {{ personalform.lastname(class=" form-control ", value = current_user.lastname) }}
+                        </div>
+                        <div class="col-md-5">
+                            {{ personalform.birthdate.label(class="form-label") }}
+                            {{ personalform.birthdate(class=" form-control ", type="date" ,value =
+                            current_user.birthdate
+                            ) }}
+                        </div>
+                        <div class="col-md-5">
+                            {{ personalform.phonenumber.label(class="form-label") }}
+                            <div class="input-group ">
+                                <!-- Dictionary with the pair or pairs of properties to add to your field inside macro in Jinja  -->
+                                {% set atribs = {'aria-describedby':"basic-addon3"} %}
+
+                                <span class="input-group-text" id="basic-addon3">+351</span>
+                                {{ personalform.phonenumber(class="form-control",
+                                value=current_user.phonenumber,**{'aria-describedby':"basic-addon3"}) }}
+                            </div>
+                            <div id="phoneNumberHelp" class="form-text">Keep 9-digit format with no spaces
+                                or dashes.</div>
+                        </div>
+                        <div class="col-12">
+                            {{ personalform.submit_personal_changes(class="btn btn-light button_purple") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="mt-5">
+                <h5 5lass="mt-2 mb-3">User Information</h5>
+                <hr class="border-2">
+            </div>
+            <div class="ms-2">
+                <div class="flex-grow-1 ">
+                    <form class="row g-3" method="POST" action="">
+                        {{ accountform.hidden_tag() }}
+                        <div class="col-md-5">
+                            {{ accountform.username.label(class="form-label") }}
+                            {{ accountform.username(class="form-control", value= current_user.username) }}
+                        </div>
+                        <div class="col-md-5">
+                            {{ accountform.email.label(class="form-label") }}
+                            {{ accountform.email(class="form-control", value= current_user.email) }}
+                        </div>
+                        <div class="col-12">
+                            {{ accountform.submit_account_changes(class="btn btn-light button_purple") }}
+                        </div>
+                    </form>
+                    <form class="row mt-3" method="POST" action="">
+                        {{ passwordform.hidden_tag() }}
+                        <hr class="border-1 mt-2">
+                        <p class="h5 my-2 text-muted">Change password</p>
+                        {{ passwordform.currentpassword.label(class="form-label") }}
+                        <div class="col-md-5 input-group mt-0 mb-3 password_input_group toggle_password">
+                            {{ passwordform.currentpassword(class="input form-control") }}
+                            <span class="input-group-text">
+                                <i class="fas fa-eye" id="show_eye"></i>
+                                <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                            </span>
+                        </div>
+                        {{ passwordform.newpassword.label(class="form-label") }}
+                        <div class="input-group mb-3 password_input_group toggle_password">
+                            {{ passwordform.newpassword(class="form-control") }}
+                            <span class="input-group-text">
+                                <i class="fas fa-eye" id="show_eye"></i>
+                                <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                            </span>
+                        </div>
+                        {{ passwordform.confirm_new_password.label(class="form-label") }}
+                        <div class="input-group mb-3 password_input_group toggle_password">
+                            {% if passwordform.confirm_new_password.errors %}
+                            {{ passwordform.confirm_new_password(class="form-control form-control-lg
+                            is-invalid")}}
+                            <span class="input-group-text">
+                                <i class="fas fa-eye" id="show_eye"></i>
+                                <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                            </span>
+                            <div class="invalid-feedback">
+                                {% for error in passwordform.confirm_new_password.errors %}
+                                <span>
+                                    {{ error }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ passwordform.confirm_new_password(class="form-control") }}
+                            <span class="input-group-text">
+                                <i class="fas fa-eye" id="show_eye"></i>
+                                <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                            </span>
+                            {% endif %}
+                        </div>
+                        <div class="col-12 ">
+                            {{ passwordform.submit_password_change(class="btn btn-light button_purple") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="my-4 text-center">
+                <a class="btn btn-light button_purple" href="{{ url_for('logout')}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                        class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                        <path fill-rule="evenodd"
+                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                    </svg>
+                    Log out
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{% include "footer.html" without context%}
+{% endblock %}

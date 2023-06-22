@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content%}
+<div id="home_page" class="container">
+    <h1 class="title" style="font-weight: bold">TrotiNet</h1>
+</div>
+<div class="main_menu">
+    <div class="container align-content-center">
+        <div class="row m-3">
+            <button onclick="toggle('popup_qrcode')" class="btn btn-light button_purple">Rent Scooter(s)</button>        </div>
+        <div class="row m-3">
+            <a class="text-center a_link" onclick="toggle('popup_group')">Join group trip</a>
+        </div>
+    </div>
+</div>
+
+<!-- hidden div -->
+<div id="popup_rent" class="main_menu main_menu_popup" style="display:none;">
+    <div class="container align-content-center">
+        <div class="row m-3">
+            <a href="{{ url_for('checkout') }}" class="btn btn-light button_purple text-center">Checkout</a>
+        </div>
+        <div class="row m-3">
+            <a onclick="toggle('popup_rent'); toggle('popup_qrcode')" class="text-center a_link">Add another scooter</a>
+        </div>
+    </div>
+</div>
+
+<!-- hidden div -->
+<div id="popup_group" class="main_menu main_menu_group_popup mx-4" style="display:none;">
+    <div class="container align-content-center">
+            <div class="row m-3">
+            <label class="form-label text-muted" for="TripID">Enter Trip ID:</label>
+                <input type="text" class="form-control" id="TripID" placeholder="#">
+            </div>
+            <div class="row m-3">
+                <a onclick="toggle('popup_rent'); toggle('popup_qrcode')" class="btn btn-light button_purple text-center">Scan QR code</a>
+            </div>
+    </div>
+</div>
+
+<!-- hidden div -->
+<div id="popup_qrcode" class="main_menu menu_qrcode_popup" style="display:none;">
+    <div onclick="toggle('popup_rent');toggle('popup_qrcode')" class="container align-content-center">
+        <div class="row qrcode mx-auto" style="margin-top: 55%;">
+            <a class="btn" style="border: none;"><img src="{{ url_for('static', filename='img/interfaceImage/Qr_code.png') }}" alt="QR code" width="90%"></a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block footer %}
+{% include "footer.html" without context%}
+{% endblock %}
